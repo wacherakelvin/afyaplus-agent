@@ -1,0 +1,5 @@
+feature,requests_30d,current_routing,current_token_cost_usd,current_hitl_cost_usd,current_total_usd,routed_model,optimised_token_cost_usd,optimised_hitl_cost_usd,optimised_total_usd,token_saving_usd,total_saving_usd,total_saving_pct
+clinical_faq,30572.0,75% mini / 25% 4o,50.89,244.58,295.46,gpt-4o-mini,10.36,244.58,254.94,40.52,40.52,13.7
+medication_assistant,45862.0,75% mini / 25% 4o,48.73,13886.19,13934.92,gpt-4o,166.25,366.9,533.15,-117.52,13401.78,96.2
+triage_advisor,76436.0,75% mini / 25% 4o,52.78,23120.91,23173.69,gpt-4o,179.62,611.49,791.11,-126.85,22382.58,96.6
+TOTAL,152870.0,-,152.4,37251.68,37404.08,-,356.24,1222.96,1579.2,-203.84,35824.88,95.8

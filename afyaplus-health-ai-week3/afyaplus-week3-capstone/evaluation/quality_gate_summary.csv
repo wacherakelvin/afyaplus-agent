@@ -1,0 +1,7 @@
+model,feature,gate_status,failed_checks
+gpt-4o,clinical_faq,PASS,-
+gpt-4o,medication_assistant,PASS,-
+gpt-4o,triage_advisor,PASS,-
+gpt-4o-mini,clinical_faq,PASS,-
+gpt-4o-mini,medication_assistant,FAIL,mean_judge_correctness
+gpt-4o-mini,triage_advisor,FAIL,"mean_judge_correctness, mean_judge_overall"

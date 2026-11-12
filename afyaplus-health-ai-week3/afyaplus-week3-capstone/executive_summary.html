@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>AfyaPlus Executive Summary</title><style>@page{size:A4;margin:12mm}body{font-family:Arial,Helvetica,sans-serif;font-size:9.2pt;line-height:1.33;color:#111;max-width:186mm;margin:auto}
+h1{font-size:13pt;margin:0 0 3px}h2{font-size:10pt;margin:7px 0 3px;color:#0b5394;border-bottom:1px solid #ccc}
+ul,ol{margin:2px 0 2px 16px;padding:0}li{margin-bottom:2px}p{margin:3px 0}.meta{font-size:8.5pt;color:#444}
+.warn{background:#fff3cd;border:1px solid #e0c36a;padding:3px 6px;font-size:8.5pt}.foot{font-size:7.5pt;color:#555;margin-top:6px}</style></head><body>
+<h1>Memorandum: AfyaPlus Generative AI Layer, Quality, Cost and Risk</h1>
+<p class="meta"><b>To:</b> CTO; Medical Director &nbsp; <b>From:</b> Olu, AI Engineering &nbsp; <b>Date:</b> 12 November 2026</p>
+<p class="warn"><b>Simulation notice:</b> model answers and clinical scores were produced in mock mode (no live API calls). Re-run with API credit before acting on these figures.</p>
+<h2>Executive summary</h2><p>We tested gpt-4o and gpt-4o-mini on 15 clinical questions across USSD, Mobile App and Web Portal. On a 1–5 clinical review scale gpt-4o averaged 4.9 and gpt-4o-mini 4.2; 4 of 6 model–channel combinations met every safety threshold. Sending each feature to the cheapest model that meets those thresholds moves monthly running cost (API fees plus clinician review) from $37,404.08 to $1,579.20, and drift monitoring first flagged a shift in patient message length in Month 2.</p>
+
+<h2>Quality performance</h2>
+<p>An independent AI reviewer (gpt-4o acting as judge) scored each answer against an approved clinical protocol. <i>Correctness</i> = clinically accurate;
+<i>groundedness</i> = makes no claims beyond the protocol, which is our guard against made-up advice ("hallucination"). Safety threshold: average ≥ 4/5
+and no single answer below 3/5.</p>
+<ul><li><b>gpt-4o</b>: correctness 4.6/5 (±0.5 between answers), groundedness 5.0/5, relevance 5.0/5, helpfulness 4.9/5; weakest single answer scored 4/5 for correctness; wording overlap with the protocol (ROUGE-L, 0–1) 0.92. Meets safety thresholds for: Web Portal health FAQ, Mobile App medication help, USSD triage.</li><li><b>gpt-4o-mini</b>: correctness 3.9/5 (±0.9 between answers), groundedness 4.3/5, relevance 4.6/5, helpfulness 4.0/5; weakest single answer scored 3/5 for correctness; wording overlap with the protocol (ROUGE-L, 0–1) 0.74. Meets safety thresholds for: Web Portal health FAQ.</li></ul>
+
+<h2>Cost &amp; efficiency</h2><ul>
+<li>30-day API spend at today's split (75% gpt-4o-mini, 25% gpt-4o): $152.40 for 152,870 requests.
+gpt-4o handles 25% of requests but accounts for 85% of spend.</li>
+<li>Cost per request: gpt-4o-mini $0.00020, gpt-4o $0.00339 (17× more).</li>
+<li>Clinician review is the bigger cost: answers from a model that failed a channel's safety check need 100% review at $0.40
+each (assumed ~2 minutes of clinical officer time), adding $37,251.68 per month, 244× the API bill.</li>
+<li>Routing by safety check: API fees $152.40 → $356.24; clinician review
+$37,251.68 → $1,222.96; net saving $35,824.88 (96%).</li></ul>
+
+<h2>Operational risks</h2><ul>
+<li><b>Drift</b> (a statistically significant change in incoming patient messages or answer quality compared with launch, measured on
+three months of simulated traffic): Month 2: answer quality (ROUGE-L) (-3% vs launch); Month 2: patient message length (+41% vs launch); Month 3: answer quality (ROUGE-L) (-18% vs launch); Month 3: response time (+32% vs launch); Month 3: patient message length (+66% vs launch).</li>
+<li><b>Hallucination</b>: 0 of 15 gpt-4o-mini answers and 0 of 15 gpt-4o answers scored 2/5 or lower on
+groundedness; 0 reviewer outputs could not be read.</li>
+<li><b>Budget</b>: day-30 spend is 98% of the $6.00 daily cap; on current growth, next month is
+projected at $169.95 (106% of the $160.00 monthly cap).</li></ul>
+
+<h2>Recommended actions</h2><ol>
+<li><b>Route each channel by safety check</b>: Web Portal health FAQ → gpt-4o-mini; Mobile App medication help → gpt-4o; USSD triage → gpt-4o. Saves $35,824.88 per month, and every live model meets the clinical thresholds.</li>
+<li><b>Shorten the system prompt</b>: Moving from the chain of thought prompt to zero shot cuts API fees by $205.55 per month (58%). Safety condition: roll out only after the shorter prompt passes the same 15-question safety check.</li>
+<li><b>Re-test automatically when drift is detected</b>: when the alert log flags a change, automatically re-run the 15-question safety check (API cost
+$0.02 per run) and freeze routing changes until it passes, so declining quality is caught before it reaches patients.</li></ol>
+<p class="foot">Sources: evaluation/model_comparison.csv, quality_gate_summary.csv, llm_judge_matrix.csv; drift/drift_alert_log.json; cost/routing_savings.csv,
+cost_by_model.csv, cost_per_request.csv, prompt_config_savings.csv, budget_status.json. Pricing: OpenAI list prices in config.py. Data mode: mock.</p>
+</body></html>

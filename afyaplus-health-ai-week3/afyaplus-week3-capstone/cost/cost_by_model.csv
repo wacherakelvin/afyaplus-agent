@@ -1,0 +1,3 @@
+model,requests,input_tokens,output_tokens,token_cost_usd,hitl_reviews,hitl_cost_usd,share_of_requests_pct,share_of_token_cost_pct
+gpt-4o,38018,9390660,10554650.0,129.0232,760.36,304.144,24.9,84.7
+gpt-4o-mini,114852,28368200,31866250.0,23.375,92368.84,36947.536,75.1,15.3

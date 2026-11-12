@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="60">
+<title>AfyaPlus Observability</title>
+<style>
+  body { font-family: system-ui, Arial, sans-serif; background: #f4f6f8; color: #1f2933; margin: 0; padding: 24px; }
+  h1 { margin: 0 0 4px; } h2 { margin-top: 0; font-size: 1.1rem; }
+  .muted { color: #6b7280; font-size: .9rem; }
+  .banner { background: #fff3cd; border: 1px solid #e5c46a; padding: 8px 12px; border-radius: 6px; margin: 12px 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); gap: 16px; margin-top: 16px; }
+  .card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #e5e7eb; }
+  th { color: #6b7280; font-weight: 600; }
+  .UP, .PASS, .OK { color: #047857; font-weight: 700; }
+  .DOWN, .FAIL, .OVER_BUDGET { color: #b91c1c; font-weight: 700; }
+  .MOCK, .AT_RISK, .DEGRADED { color: #b45309; font-weight: 700; }
+  .routed { background: #ecfdf5; }
+  .bar { background: #e5e7eb; height: 14px; border-radius: 7px; overflow: hidden; margin: 4px 0 12px; }
+  .fill { height: 100%; } .fill.ok { background: #10b981; } .fill.warn { background: #f59e0b; } .fill.over { background: #ef4444; }
+  a { color: #1d4ed8; }
+</style>
+</head>
+<body>
+{% macro f(x, p=2) %}{% if x is none %}–{% else %}{{ ("%." ~ p ~ "f")|format(x) }}{% endif %}{% endmacro %}
+
+<h1>AfyaPlus Executive Observability Dashboard</h1>
+<p class="muted">Data mode: <strong>{{ mode|upper }}</strong> · auto-refresh 60s ·
+  <a href="/metrics">/metrics</a> · <a href="/health">/health</a> · <a href="/api/summary">/api/summary</a></p>
+{% if mode == 'mock' %}
+<div class="banner">Mock mode: model answers and judge scores are simulated. Re-run Phase 1 with API credit for live figures.</div>
+{% endif %}
+
+<div class="grid">
+  <!-- 1. System health -->
+  <div class="card">
+    <h2>1 · System Health</h2>
+    <table>
+      <tr><th>Service</th><th>Status</th></tr>
+      {% for name, status in services.items() %}
+      <tr><td>{{ name }}</td><td class="{{ status }}">{{ status }}</td></tr>
+      {% endfor %}
+    </table>
+    <table style="margin-top:12px">
+      <tr><th>Exception counter</th><th>Count</th></tr>
+      {% for name, value in exceptions.items() %}
+      <tr><td>{{ name }}</td><td class="{{ 'FAIL' if value else 'OK' }}">{{ value }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <!-- 2. Feature quality matrix -->
+  <div class="card">
+    <h2>2 · Feature Quality Matrix &amp; Routing</h2>
+    {% if quality %}
+    <table>
+      <tr><th>Feature</th><th>Model</th><th>Correct.</th><th>Ground.</th><th>Overall</th><th>ROUGE-L</th><th>Gate</th><th>Routed</th></tr>
+      {% for r in quality %}
+      <tr class="{{ 'routed' if r.routed }}">
+        <td>{{ r.feature }}</td><td>{{ r.model }}</td>
+        <td>{{ f(r.correctness, 1) }}</td><td>{{ f(r.groundedness, 1) }}</td><td>{{ f(r.overall, 1) }}</td>
+        <td>{{ f(r.rouge_l) }}</td>
+        <td class="{{ r.gate }}" title="{{ r.failed_checks }}">{{ r.gate }}</td>
+        <td>{{ '● live' if r.routed else '' }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <p class="muted">Gates: mean correctness, groundedness and overall ≥ 4/5, ROUGE-L ≥ 0.20, no single answer below 3/5. Hover a FAIL to see which check failed.</p>
+    {% else %}<p>No evaluation data. Run Phase 1.</p>{% endif %}
+  </div>
+
+  <!-- 3. Drift -->
+  <div class="card">
+    <h2>3 · Drift Vector Status{% if drift_month %} (Month {{ drift_month }}){% endif %}</h2>
+    {% if drift_rows %}
+    <table>
+      <tr><th>Column</th><th>Baseline mean</th><th>Current mean</th><th>Change</th><th>Test</th><th>Score</th><th>Drift</th></tr>
+      {% for r in drift_rows %}
+      <tr>
+        <td>{{ r.column }}</td><td>{{ f(r.reference_mean) }}</td><td>{{ f(r.current_mean) }}</td>
+        <td>{{ "%+.1f"|format(r.pct_change) }}%</td><td>{{ r.stattest or '–' }}</td><td>{{ f(r.drift_score, 4) }}</td>
+        <td class="{{ 'FAIL' if r.drift_detected else 'PASS' }}">{{ 'DRIFT' if r.drift_detected else 'stable' }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% if first_drift %}<p><strong>First alert:</strong> {{ first_drift.message }}</p>{% endif %}
+    <p class="muted">Reports:
+      {% for m in [1, 2, 3] %}<a href="/reports/month_{{ m }}_drift_report.html" target="_blank">Month {{ m }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+    {% else %}<p>No drift data. Run Phase 2.</p>{% endif %}
+  </div>
+
+  <!-- 4. Budget -->
+  <div class="card">
+    <h2>4 · Budget Capital Utilisation</h2>
+    {% if bars %}
+      {% for b in bars %}
+      <div>{{ b.label }}: <strong>${{ f(b.spend) }}</strong> of ${{ f(b.cap) }} ({{ f(b.pct, 1) }}%)</div>
+      <div class="bar"><div class="fill {{ 'over' if b.pct > 100 else ('warn' if b.pct >= 80 else 'ok') }}"
+           style="width: {{ [b.pct, 100]|min }}%"></div></div>
+      {% endfor %}
+      <p>Status: <span class="{{ budget.status }}">{{ budget.status }}</span>
+         · days over daily cap: {{ budget.days_over_daily_cap }}
+         · clinician review cost: ${{ f(budget.hitl_month_cost_usd) }}</p>
+      {% if budget.predictive_alert %}<p class="FAIL">{{ budget.predictive_alert }}</p>{% endif %}
+    {% else %}<p>No cost data. Run Phase 3.</p>{% endif %}
+  </div>
+</div>
+</body>
+</html>

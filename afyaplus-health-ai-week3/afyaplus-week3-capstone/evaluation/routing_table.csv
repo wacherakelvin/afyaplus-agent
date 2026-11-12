@@ -1,0 +1,4 @@
+feature,routed_model,gate_status,human_review_required
+clinical_faq,gpt-4o-mini,PASS,False
+medication_assistant,gpt-4o,PASS,False
+triage_advisor,gpt-4o,PASS,False

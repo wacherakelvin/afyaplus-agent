@@ -1,0 +1,31 @@
+id,channel,feature,model,mode,judge_correctness,judge_groundedness,judge_relevance,judge_helpfulness,judge_overall,judge_reasoning
+q01,USSD,triage_advisor,gpt-4o-mini,mock,3.0,4.0,4.0,3.0,3.5,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q01,USSD,triage_advisor,gpt-4o,mock,4.0,5.0,5.0,4.0,4.5,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q02,USSD,triage_advisor,gpt-4o-mini,mock,3.0,4.0,4.0,3.0,3.5,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q02,USSD,triage_advisor,gpt-4o,mock,4.0,5.0,5.0,5.0,4.75,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q03,USSD,triage_advisor,gpt-4o-mini,mock,3.0,4.0,4.0,3.0,3.5,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q03,USSD,triage_advisor,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q04,USSD,triage_advisor,gpt-4o-mini,mock,3.0,4.0,4.0,3.0,3.5,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q04,USSD,triage_advisor,gpt-4o,mock,4.0,5.0,5.0,5.0,4.75,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q05,USSD,triage_advisor,gpt-4o-mini,mock,3.0,4.0,4.0,4.0,3.75,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q05,USSD,triage_advisor,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q06,Mobile App,medication_assistant,gpt-4o-mini,mock,4.0,4.0,5.0,4.0,4.25,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q06,Mobile App,medication_assistant,gpt-4o,mock,4.0,5.0,5.0,5.0,4.75,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q07,Mobile App,medication_assistant,gpt-4o-mini,mock,3.0,4.0,4.0,3.0,3.5,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q07,Mobile App,medication_assistant,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q08,Mobile App,medication_assistant,gpt-4o-mini,mock,4.0,4.0,5.0,4.0,4.25,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q08,Mobile App,medication_assistant,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q09,Mobile App,medication_assistant,gpt-4o-mini,mock,4.0,4.0,5.0,4.0,4.25,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q09,Mobile App,medication_assistant,gpt-4o,mock,4.0,5.0,5.0,5.0,4.75,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q10,Mobile App,medication_assistant,gpt-4o-mini,mock,4.0,5.0,5.0,4.0,4.5,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q10,Mobile App,medication_assistant,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q11,Web Portal,clinical_faq,gpt-4o-mini,mock,5.0,4.0,5.0,5.0,4.75,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q11,Web Portal,clinical_faq,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q12,Web Portal,clinical_faq,gpt-4o-mini,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q12,Web Portal,clinical_faq,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q13,Web Portal,clinical_faq,gpt-4o-mini,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q13,Web Portal,clinical_faq,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q14,Web Portal,clinical_faq,gpt-4o-mini,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q14,Web Portal,clinical_faq,gpt-4o,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q15,Web Portal,clinical_faq,gpt-4o-mini,mock,5.0,5.0,5.0,5.0,5.0,MOCK heuristic score from overlap with the reference protocol (no LLM call).
+q15,Web Portal,clinical_faq,gpt-4o,mock,4.0,5.0,5.0,5.0,4.75,MOCK heuristic score from overlap with the reference protocol (no LLM call).
