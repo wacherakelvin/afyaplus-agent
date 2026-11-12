@@ -28,9 +28,9 @@ python build_summary.py                # Phase 5 -> executive_summary.html -> pr
 ```
 
 ## Dashboard endpoints
+![AfyaPlus dashboard](dashboard_screenshot.png)
 - `/` dashboard (health, quality matrix + routing, drift status, budget bars)
 - `/metrics` Prometheus scrape endpoint · `/health` · `/api/summary` · `/reports/month_N_drift_report.html`
-
 Prometheus scrape config:
 ```yaml
 scrape_configs:
