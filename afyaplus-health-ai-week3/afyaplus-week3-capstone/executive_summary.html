@@ -17,8 +17,7 @@ and no single answer below 3/5.</p>
 <li>30-day API spend at today's split (75% gpt-4o-mini, 25% gpt-4o): $152.40 for 152,870 requests.
 gpt-4o handles 25% of requests but accounts for 85% of spend.</li>
 <li>Cost per request: gpt-4o-mini $0.00020, gpt-4o $0.00339 (17× more).</li>
-<li>Clinician review is the bigger cost: answers from a model that failed a channel's safety check need 100% review at $0.40
-each (assumed ~2 minutes of clinical officer time), adding $1,222.96 per month, 8× the API bill.</li>
+<li>Clinician review is the bigger cost: every model passed, so only a 2% spot audit is needed at $0.40 per reviewed answer (assumed ~2 minutes of clinical officer time). That still adds $1,222.96 per month, 8× the API bill.</li>
 <li>Routing by safety check: API fees $152.40 → $31.12; clinician review
 $1,222.96 → $1,222.96; net saving $121.28 (9%).</li></ul>
 
@@ -31,7 +30,7 @@ groundedness; 0 reviewer outputs could not be read.</li>
 projected at $169.95 (106% of the $160.00 monthly cap).</li></ul>
 
 <h2>Recommended actions</h2><ol>
-<li><b>Route each channel by safety check</b>: Web Portal health FAQ → gpt-4o-mini; Mobile App medication help → gpt-4o-mini; USSD triage → gpt-4o-mini. Saves $121.28 per month, and every live model meets the clinical thresholds.</li>
+<li><b>Route each channel by safety check</b>: Web Portal health FAQ → gpt-4o-mini; Mobile App medication help → gpt-4o-mini; USSD triage → gpt-4o-mini. Saves $121.28 per month, and every live model meets the clinical thresholds. Each channel was tested on only 5 questions, so move USSD triage gradually (start with 10% of triage traffic) and re-run the safety check weekly.</li>
 <li><b>Shorten the system prompt</b>: Moving from the chain of thought prompt to zero shot cuts API fees by $18.02 per month (58%). Safety condition: roll out only after the shorter prompt passes the same 15-question safety check.</li>
 <li><b>Re-test automatically when drift is detected</b>: when the alert log flags a change, automatically re-run the 15-question safety check (API cost
 $0.02 per run) and freeze routing changes until it passes, so declining quality is caught before it reaches patients.</li></ol>

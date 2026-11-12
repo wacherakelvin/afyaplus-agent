@@ -41,7 +41,18 @@ weighted = cpr[(cpr.prompt_config == config.PRODUCTION_PROMPT_CONFIG) & (cpr.fea
 best_prompt = prompts.sort_values("monthly_token_cost_usd").iloc[0]
 first, alerts = drift.get("first_drift"), drift.get("alerts", [])
 hitl_ratio = total.current_hitl_cost_usd / max(total.current_token_cost_usd, 1e-9)
+if n_pass < n_combo:
+    hitl_txt = (f"Clinician review is the bigger cost: answers from a model that failed a channel's safety check need 100% review "
+                f"at {money(config.HITL_COST_PER_REVIEW_USD)} each (assumed ~2 minutes of clinical officer time), adding "
+                f"{money(total.current_hitl_cost_usd)} per month, {hitl_ratio:,.0f}× the API bill.")
+else:
+    hitl_txt = (f"Clinician review is the bigger cost: every model passed, so only a {config.HITL_REVIEW_RATE_PASS:.0%} spot audit is needed "
+                f"at {money(config.HITL_COST_PER_REVIEW_USD)} per reviewed answer (assumed ~2 minutes of clinical officer time). "
+                f"That still adds {money(total.current_hitl_cost_usd)} per month, {hitl_ratio:,.0f}× the API bill.")
 
+triage_routed = routing.set_index("feature").loc["triage_advisor", "routed_model"]
+canary_txt = (" Each channel was tested on only 5 questions, so move USSD triage gradually (start with 10% of triage traffic) "
+              "and re-run the safety check weekly." if triage_routed == "gpt-4o-mini" else "")
 drift_txt = (f"drift monitoring first flagged a shift in {LABEL[first['column']]} in Month {first['month']}"
              if first else "drift monitoring found no significant shift across three months")
 exec_summary = (
@@ -92,8 +103,7 @@ and no single answer below 3/5.</p>
 <li>30-day API spend at today's split (75% gpt-4o-mini, 25% gpt-4o): {money(by_model.token_cost_usd.sum())} for {int(by_model.requests.sum()):,} requests.
 gpt-4o handles {by_model.loc['gpt-4o', 'share_of_requests_pct']:.0f}% of requests but accounts for {by_model.loc['gpt-4o', 'share_of_token_cost_pct']:.0f}% of spend.</li>
 <li>Cost per request: gpt-4o-mini ${weighted['gpt-4o-mini']:.5f}, gpt-4o ${weighted['gpt-4o']:.5f} ({weighted['gpt-4o'] / weighted['gpt-4o-mini']:.0f}× more).</li>
-<li>Clinician review is the bigger cost: answers from a model that failed a channel's safety check need 100% review at {money(config.HITL_COST_PER_REVIEW_USD)}
-each (assumed ~2 minutes of clinical officer time), adding {money(total.current_hitl_cost_usd)} per month, {hitl_ratio:,.0f}× the API bill.</li>
+<li>{hitl_txt}</li>
 <li>Routing by safety check: API fees {money(total.current_token_cost_usd)} → {money(total.optimised_token_cost_usd)}; clinician review
 {money(total.current_hitl_cost_usd)} → {money(total.optimised_hitl_cost_usd)}; net saving {money(total.total_saving_usd)} ({total.total_saving_pct:.0f}%).</li></ul>
 
@@ -106,7 +116,7 @@ groundedness; {run['judge_parse_failures']} reviewer outputs could not be read.<
 projected at {money(budget['projected_next_month_usd'])} ({budget['projected_next_month_utilisation_pct']:.0f}% of the {money(budget['monthly_cap_usd'])} monthly cap).</li></ul>
 
 <h2>Recommended actions</h2><ol>
-<li><b>Route each channel by safety check</b>: {route_txt}. Saves {money(total.total_saving_usd)} per month, and every live model meets the clinical thresholds.</li>
+<li><b>Route each channel by safety check</b>: {route_txt}. Saves {money(total.total_saving_usd)} per month, and every live model meets the clinical thresholds.{canary_txt}</li>
 <li><b>Shorten the system prompt</b>: {prompt_rec}</li>
 <li><b>Re-test automatically when drift is detected</b>: when the alert log flags a change, automatically re-run the 15-question safety check (API cost
 {money(run['generation_cost_usd'])} per run) and freeze routing changes until it passes, so declining quality is caught before it reaches patients.</li></ol>
