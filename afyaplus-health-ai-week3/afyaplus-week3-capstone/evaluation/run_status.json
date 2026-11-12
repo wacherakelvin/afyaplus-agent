@@ -1,8 +1,8 @@
 {
-  "mode": "mock",
-  "generated_at": "2026-11-12T10:51:26.795281+00:00",
+  "mode": "live",
+  "generated_at": "2026-11-12T12:09:47.369410+00:00",
   "rows": 30,
   "generation_errors": 0,
   "judge_parse_failures": 0,
-  "generation_cost_usd": 0.0166
+  "generation_cost_usd": 0.0233
 }

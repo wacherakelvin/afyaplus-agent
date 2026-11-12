@@ -1,5 +1,5 @@
 period,mean_rouge_l,mean_latency_ms,mean_input_tokens,pct_change_rouge_l,drift_rouge_l,pct_change_latency_ms,drift_latency_ms,pct_change_input_tokens,drift_input_tokens
-Baseline,0.8188,1364.3939,81.8733,,,,,,
-Month 1,0.8165,1394.9915,82.535,-0.3,False,2.2,False,0.8,False
-Month 2,0.7946,1398.4749,115.1983,-3.0,True,2.5,False,40.7,True
-Month 3,0.67,1803.7036,135.94,-18.2,True,32.2,True,66.0,True
+Baseline,0.2502,2091.177,89.01,,,,,,
+Month 1,0.2491,2143.4906,89.75,-0.4,False,2.5,False,0.8,False
+Month 2,0.2423,2146.1991,125.2867,-3.1,True,2.6,False,40.8,True
+Month 3,0.2046,2767.4161,147.8383,-18.2,True,32.3,True,66.1,True

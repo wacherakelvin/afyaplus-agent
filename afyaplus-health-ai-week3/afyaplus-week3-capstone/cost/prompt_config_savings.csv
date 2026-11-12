@@ -1,4 +1,4 @@
 prompt_config,monthly_token_cost_usd,saving_vs_production_usd,saving_pct
-zero_shot,150.69,205.55,57.7
-few_shot,265.51,90.73,25.5
-chain_of_thought,356.24,0.0,0.0
+zero_shot,13.09,18.02,57.9
+few_shot,21.58,9.54,30.7
+chain_of_thought,31.12,0.0,0.0

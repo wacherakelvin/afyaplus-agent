@@ -1,5 +1,5 @@
 {
-  "mode": "mock",
+  "mode": "live",
   "daily_cap_usd": 6.0,
   "monthly_cap_usd": 160.0,
   "latest_day": 30,
@@ -13,6 +13,6 @@
   "projected_next_month_usd": 169.95,
   "projected_next_month_utilisation_pct": 106.2,
   "predictive_alert": "Projected to exceed monthly cap next month (106%)",
-  "hitl_month_cost_usd": 37251.68,
+  "hitl_month_cost_usd": 1222.96,
   "status": "AT_RISK"
 }

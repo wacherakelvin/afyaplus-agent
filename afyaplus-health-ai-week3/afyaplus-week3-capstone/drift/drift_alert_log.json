@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-12T10:53:39.528909+00:00",
-  "mode": "mock",
+  "generated_at": "2026-11-12T12:09:59.286285+00:00",
+  "mode": "live",
   "baseline_source": "phase1_raw_metrics_log",
   "reference_rows": 600,
   "rows_per_month": 600,
@@ -16,11 +16,11 @@
     "drift_score": 0.0,
     "stattest": "K-S p_value",
     "threshold": 0.05,
-    "reference_mean": 81.8733,
-    "current_mean": 115.1983,
-    "pct_change": 40.7,
+    "reference_mean": 89.01,
+    "current_mean": 125.2867,
+    "pct_change": 40.8,
     "severity": "WARNING",
-    "message": "Drift detected in input_tokens in Month 2 (K-S p_value, score=0.0, change=+40.7%)"
+    "message": "Drift detected in input_tokens in Month 2 (K-S p_value, score=0.0, change=+40.8%)"
   },
   "first_drift_by_column": {
     "rouge_l": 2,
@@ -32,14 +32,14 @@
       "month": 2,
       "column": "rouge_l",
       "drift_detected": true,
-      "drift_score": 0.002662,
+      "drift_score": 0.042948,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 0.8188,
-      "current_mean": 0.7946,
-      "pct_change": -3.0,
+      "reference_mean": 0.2502,
+      "current_mean": 0.2423,
+      "pct_change": -3.1,
       "severity": "CRITICAL",
-      "message": "Drift detected in rouge_l in Month 2 (K-S p_value, score=0.002662, change=-3.0%)"
+      "message": "Drift detected in rouge_l in Month 2 (K-S p_value, score=0.042948, change=-3.1%)"
     },
     {
       "month": 2,
@@ -48,11 +48,11 @@
       "drift_score": 0.0,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 81.8733,
-      "current_mean": 115.1983,
-      "pct_change": 40.7,
+      "reference_mean": 89.01,
+      "current_mean": 125.2867,
+      "pct_change": 40.8,
       "severity": "WARNING",
-      "message": "Drift detected in input_tokens in Month 2 (K-S p_value, score=0.0, change=+40.7%)"
+      "message": "Drift detected in input_tokens in Month 2 (K-S p_value, score=0.0, change=+40.8%)"
     },
     {
       "month": 3,
@@ -61,8 +61,8 @@
       "drift_score": 0.0,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 0.8188,
-      "current_mean": 0.67,
+      "reference_mean": 0.2502,
+      "current_mean": 0.2046,
       "pct_change": -18.2,
       "severity": "CRITICAL",
       "message": "Drift detected in rouge_l in Month 3 (K-S p_value, score=0.0, change=-18.2%)"
@@ -74,11 +74,11 @@
       "drift_score": 0.0,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 1364.3939,
-      "current_mean": 1803.7036,
-      "pct_change": 32.2,
+      "reference_mean": 2091.177,
+      "current_mean": 2767.4161,
+      "pct_change": 32.3,
       "severity": "WARNING",
-      "message": "Drift detected in latency_ms in Month 3 (K-S p_value, score=0.0, change=+32.2%)"
+      "message": "Drift detected in latency_ms in Month 3 (K-S p_value, score=0.0, change=+32.3%)"
     },
     {
       "month": 3,
@@ -87,11 +87,11 @@
       "drift_score": 0.0,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 81.8733,
-      "current_mean": 135.94,
-      "pct_change": 66.0,
+      "reference_mean": 89.01,
+      "current_mean": 147.8383,
+      "pct_change": 66.1,
       "severity": "WARNING",
-      "message": "Drift detected in input_tokens in Month 3 (K-S p_value, score=0.0, change=+66.0%)"
+      "message": "Drift detected in input_tokens in Month 3 (K-S p_value, score=0.0, change=+66.1%)"
     }
   ],
   "monthly_results": [
@@ -102,9 +102,9 @@
       "drift_score": 0.815152,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 0.8188,
-      "current_mean": 0.8165,
-      "pct_change": -0.3
+      "reference_mean": 0.2502,
+      "current_mean": 0.2491,
+      "pct_change": -0.4
     },
     {
       "month": 1,
@@ -113,9 +113,9 @@
       "drift_score": 0.290543,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 1364.3939,
-      "current_mean": 1394.9915,
-      "pct_change": 2.2
+      "reference_mean": 2091.177,
+      "current_mean": 2143.4906,
+      "pct_change": 2.5
     },
     {
       "month": 1,
@@ -124,31 +124,31 @@
       "drift_score": 0.441609,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 81.8733,
-      "current_mean": 82.535,
+      "reference_mean": 89.01,
+      "current_mean": 89.75,
       "pct_change": 0.8
     },
     {
       "month": 2,
       "column": "rouge_l",
       "drift_detected": true,
-      "drift_score": 0.002662,
+      "drift_score": 0.042948,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 0.8188,
-      "current_mean": 0.7946,
-      "pct_change": -3.0
+      "reference_mean": 0.2502,
+      "current_mean": 0.2423,
+      "pct_change": -3.1
     },
     {
       "month": 2,
       "column": "latency_ms",
       "drift_detected": false,
-      "drift_score": 0.578351,
+      "drift_score": 0.626653,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 1364.3939,
-      "current_mean": 1398.4749,
-      "pct_change": 2.5
+      "reference_mean": 2091.177,
+      "current_mean": 2146.1991,
+      "pct_change": 2.6
     },
     {
       "month": 2,
@@ -157,9 +157,9 @@
       "drift_score": 0.0,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 81.8733,
-      "current_mean": 115.1983,
-      "pct_change": 40.7
+      "reference_mean": 89.01,
+      "current_mean": 125.2867,
+      "pct_change": 40.8
     },
     {
       "month": 3,
@@ -168,8 +168,8 @@
       "drift_score": 0.0,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 0.8188,
-      "current_mean": 0.67,
+      "reference_mean": 0.2502,
+      "current_mean": 0.2046,
       "pct_change": -18.2
     },
     {
@@ -179,9 +179,9 @@
       "drift_score": 0.0,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 1364.3939,
-      "current_mean": 1803.7036,
-      "pct_change": 32.2
+      "reference_mean": 2091.177,
+      "current_mean": 2767.4161,
+      "pct_change": 32.3
     },
     {
       "month": 3,
@@ -190,9 +190,9 @@
       "drift_score": 0.0,
       "stattest": "K-S p_value",
       "threshold": 0.05,
-      "reference_mean": 81.8733,
-      "current_mean": 135.94,
-      "pct_change": 66.0
+      "reference_mean": 89.01,
+      "current_mean": 147.8383,
+      "pct_change": 66.1
     }
   ]
 }
