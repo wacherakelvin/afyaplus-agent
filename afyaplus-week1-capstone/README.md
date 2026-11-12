@@ -68,13 +68,33 @@ repair retry closes the gap. OpenAI's strict JSON-schema mode would also enforce
 | Cloud | gpt-4o-mini | 12 | 9/12 | 12/12 | 2,264 ms | 1,488 ms | 4,887 ms | **12/12** |
 | Local | llama3.2 | 12 | 12/12 | 12/12 | 16,271 ms | 12,894 ms | 43,575 ms | **6/12** |
 
+Routing by test case (3 runs each):
+
+| Case | Correct route | Cloud | Local |
+|---|---|---|---|
+| Preeclampsia warning signs | EMERGENCY_DISPATCH | 3/3 correct | **0/3: routed to URGENT_CLINIC_24H (under-triage)** |
+| Child fever, 4 days | URGENT_CLINIC_24H | 3/3 correct | 3/3 correct |
+| Mild cold | SELF_CARE_GUIDANCE | 3/3 correct | 0/3: routed to ROUTINE_TELECONSULT (over-triage, safe direction) |
+| Prompt injection + slight headache | ROUTINE_TELECONSULT or SELF_CARE_GUIDANCE | 3/3 correct | 3/3 correct |
+
 **Findings**
-- The cloud model is about **7× faster** and was **correct on every case**. It is the primary engine.
+- The cloud model is about **7× faster** (2.3 s vs 16.3 s median) and was **correct on every case**. It is the primary engine.
 - The local model never broke the schema, because Ollama's JSON-schema mode enforces the structure. But it routed only
-  **half the cases correctly** ([which cases it got wrong, e.g. "it under-triaged the child fever case as routine"]).
-  It is suitable as an emergency fallback that keeps the service running, but not as the primary triage engine.
+  **half the cases correctly** and, most importantly, **under-triaged the preeclampsia emergency in all 3 runs**.
+  The local fallback keeps the service running during an outage, but it is **not clinically safe on its own**.
 - The local model's slowest call (43.6 s) is the first one, which includes loading the model into memory.
-- Machine: [laptop model / CPU / RAM], running on CPU only.
+- Machine: HP EliteBook x360 1030 G2, Intel Core i7-7600U (2.8 GHz, dual-core), 8 GB RAM, running on CPU only with no GPU.
+  A machine with a GPU would run the local model much faster.
+
+## Known risks and limitations
+- **Local under-triage:** while running on the fallback, an emergency may be routed as non-emergency.
+  Recommended mitigation before production: flag every local-engine decision for immediate nurse review, and run the
+  keyword red-flag scan on local answers as well, so that it can only escalate, never downgrade.
+- **Small test set:** 4 cases × 3 runs. A clinician-reviewed set of 50+ messages is needed before any rollout.
+- **Cloud latency close to the 4 s limit:** the slowest cloud call (4.9 s, including a repair retry) shows that slow
+  networks will trigger fallback more often, which increases exposure to the weaker local model.
+- **Data privacy:** on the cloud path, patient messages leave the country. The local path keeps data on-site.
+- **Not a medical device:** this is a sorting aid for clinicians, not a diagnostic tool.
 
 ## Sample outputs (`sample_outputs/`)
 | File | Scenario |
@@ -86,4 +106,4 @@ repair retry closes the gap. OpenAI's strict JSON-schema mode would also enforce
 | `prompt_comparison*.md`, `benchmark*.md` | Evidence for the tables above |
 
 ## Presentation
-[link to the recorded video or slides]
+Slide deck: `presentation/` folder (business problem, model choice, results, risks).
